@@ -19,10 +19,8 @@ const getLogger = {
           console.log(`${colors.bgBlue(moduleName)}: ${msg}`);
       }
   },
-  error: (moduleName, msg) => {
-      if (LOG_LEVEL === 'error' || LOG_LEVEL === 'info' || LOG_LEVEL === 'warn') {
+  error: (moduleName, msg) =>  {
           console.log(`${colors.bgReded(moduleName)}: ${msg}`);
-      }
   }
 };
 
