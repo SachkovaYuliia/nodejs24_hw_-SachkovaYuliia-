@@ -1,4 +1,6 @@
-// module.exports = {
-//   COLORS_ENABLED: 0,
-//   LOG_LEVEL: 'warn'
-// };
+// модуль 'config' нам потрібен як центральна точка доступа для всього нашого енвайронмент-залежного сетапа
+// тут у нас ЄДИНЕ МІСЦЕ в нашому коді де ми будемо лазити напряму в process.env
+module.exports = {
+  colorsEnabled: +process.env.COLORS_ENABLED || 0, // або значення із енва, або дефолтне якщо в енві не задано
+  logLevel: process.env.LOG_LEVEL || 'warn'
+};
