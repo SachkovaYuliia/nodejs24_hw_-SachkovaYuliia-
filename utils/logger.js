@@ -1,18 +1,26 @@
-const {bgBlue, bgRed, bgGreen} = require('colors/safe');
-const config = require('config');
+const dotenv = require('dotenv');
+dotenv.config();
+const {bgGreen, bgBlue, bgRed} = require('colors/safe');
 
-const COLORS_ENABLED = config.get('COLORS_ENABLED');
-const LOG_LEVEL = config.get('LOG_LEVEL');
+// const config = require('config');
+// const COLORS_ENABLED = config.get('COLORS_ENABLED');
+// const LOG_LEVEL = config.get('LOG_LEVEL');
+
+const COLORS_ENABLED = process.env.COLORS_ENABLED;
+const LOG_LEVEL = process.env.LOG_LEVEL;
+
+console.log(COLORS_ENABLED);
+console.log(LOG_LEVEL);
 
 function getModuleColor(col) {
     if (COLORS_ENABLED === 1) {
       switch (col) {
         case 'info':
-          return bgBlue;
-        case 'warn':
-          return bgRed;
-        case 'error':
           return bgGreen;
+        case 'warn':
+          return bgBlue;
+        case 'error':
+          return bgRed;
         default:
           return moduleName => moduleName; 
       }
