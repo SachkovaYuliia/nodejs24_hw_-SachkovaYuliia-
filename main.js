@@ -1,6 +1,10 @@
-// імпортуємо як один об'єкт всі ключі відразу:
-const logger = require('./utils/logger')('main');
+// тут ми підтягуємо значення із файліка .env (якщо він є) і запихуєм в змінні в process.env
+// ми це зробимо тут, в точці входу в нашу програму - і це має ефект на все одразу, де буде використовуватись конфіг
+const dotenv = require('dotenv');
+dotenv.config();
 
-logger.info('the script is running!');
-logger.warn('another script is running!');
-logger.error('the script is not running!');
+const logger = require('./utils/logger');
+
+logger.info('Module', 'the script is running!');
+logger.warn('Module', 'another script is running!');
+logger.error('Module', 'the script is not running!');
