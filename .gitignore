@@ -129,5 +129,8 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-/source/*
-/target/*
+source/*
+!source/.gitkeep
+
+target/*
+!target/.gitkeep
