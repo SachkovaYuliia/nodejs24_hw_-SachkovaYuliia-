@@ -25,7 +25,7 @@ const getLogger = (moduleName) => ({
   },
 });
 
-// _____hw4
+// hw4
 
 function createLogsFolder() {
     const logsDir = path.join(__dirname, 'logs');
@@ -44,5 +44,45 @@ function createLogsFolder() {
 
 createLogsFolder();
 
+const infoStream = fs.createWriteStream(path.join(__dirname, 'logs', 'info.log'), { flags: 'a' });
+
+const errorStream = fs.createWriteStream(path.join(__dirname, 'logs', 'errors.log'), { flags: 'a' });
+
+function logMessage(stream, message) {
+    const updatedMessage = `${new Date().toISOString()} - ${message}\n`;
+    stream.write(updatedMessage);
+}
+
+function logInfo(message) {
+    logMessage(infoStream, message);
+}
+
+function logWarn(message) {
+    logMessage(errorStream, `[WARN] ${message}`);
+}
+
+function logError(message) {
+    logMessage(errorStream, `[ERROR] ${message}`);
+}
+logInfo('It is test for the info message.');
+logWarn('It is test for the warning message.');
+logError('It is test for the error message.');
+logInfo('It is test for the info message2.');
+logWarn('It is test for the warning message2.');
+logError('It is test for the error message2.');
+logInfo('It is test for the info message3.');
+logWarn('It is test for the warning message3.');
+logError('It is test for the error message3.');
+
+process.on('beforeExit', () => {
+    infoStream.end();
+    errorStream.end();
+});
+
+module.exports = {
+  logInfo,
+  logWarn,
+  logError
+};
 
 module.exports = getLogger;
