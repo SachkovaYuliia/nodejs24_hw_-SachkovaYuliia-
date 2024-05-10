@@ -2,7 +2,6 @@ const colors = require('colors');
 const { colorsEnabled, logLevel } = require('config');
 const fs = require('fs');
 const path = require('path');
-const { Readable, Writable } = require('stream');
 
 // ! цю частину про виключення кольорів ти десь взагалі загубила
 if (!colorsEnabled) {
@@ -28,25 +27,17 @@ const getLogger = (moduleName) => ({
 // hw4
 
 function createLogsFolder() {
-    const logsDir = path.join(__dirname, 'logs');
+    const logsDir = path.join(__dirname, '..', 'logs');
     if (!fs.existsSync(logsDir)) {
         fs.mkdirSync(logsDir);
-    }
-    const infoLogFile = path.join(logsDir, 'info.log');
-    const errorLogFile = path.join(logsDir, 'errors.log');
-    if (!fs.existsSync(infoLogFile)) {
-        fs.writeFileSync(infoLogFile, ''); 
-    }
-    if (!fs.existsSync(errorLogFile)) {
-        fs.writeFileSync(errorLogFile, ''); 
     }
 }
 
 createLogsFolder();
 
-const infoStream = fs.createWriteStream(path.join(__dirname, 'logs', 'info.log'), { flags: 'a' });
+const infoStream = fs.createWriteStream(path.join(__dirname, '..','logs', 'info.log'), { flags: 'a' });
 
-const errorStream = fs.createWriteStream(path.join(__dirname, 'logs', 'errors.log'), { flags: 'a' });
+const errorStream = fs.createWriteStream(path.join(__dirname, '..','logs', 'errors.log'), { flags: 'a' });
 
 function logMessage(stream, message) {
     const updatedMessage = `${new Date().toISOString()} - ${message}\n`;
@@ -54,16 +45,32 @@ function logMessage(stream, message) {
 }
 
 function logInfo(message) {
+  if (process.env.LOG_LEVEL === 'INFO') {
+    console.log(message);
     logMessage(infoStream, message);
+  } else {
+  logMessage(infoStream, message);
+  }
 }
 
 function logWarn(message) {
+  if (process.env.LOG_LEVEL === 'WARN') {
+    console.log(message);
     logMessage(errorStream, `[WARN] ${message}`);
+  } else {
+    logMessage(errorStream, `[WARN] ${message}`);
+  }
 }
 
 function logError(message) {
+  if (process.env.LOG_LEVEL === 'ERROR') {
+    console.log(message);
     logMessage(errorStream, `[ERROR] ${message}`);
+  } else {
+    logMessage(errorStream, `[ERROR] ${message}`);
+  }
 }
+
 logInfo('It is test for the info message.');
 logWarn('It is test for the warning message.');
 logError('It is test for the error message.');
@@ -78,11 +85,5 @@ process.on('beforeExit', () => {
     infoStream.end();
     errorStream.end();
 });
-
-module.exports = {
-  logInfo,
-  logWarn,
-  logError
-};
 
 module.exports = getLogger;

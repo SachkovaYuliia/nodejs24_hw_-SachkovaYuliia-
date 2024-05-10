@@ -3,11 +3,13 @@
 const dotenv = require('dotenv');
 dotenv.config();
 
-const logger = require('./utils/logger');
+const getLogger = require('./utils/logger'); 
+const myLogger = getLogger('getLogger');
 
-// logger.info('Module', 'the script is running!');
-// logger.warn('Module', 'another script is running!');
-// logger.error('Module', 'the script is not running!');
+
+// myLogger.info('Module', 'the script is running!');
+// myLogger.warn('Module', 'another script is running!');
+// myLogger.error('Module', 'the script is not running!');
 
 const fileSync = require('./file_sync');
 fileSync.start();
