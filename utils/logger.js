@@ -3,8 +3,6 @@ const { colorsEnabled, logLevel } = require('config');
 const fs = require('fs');
 const path = require('path');
 
-const { LOG_LEVEL, COLORS_ENABLED } = process.env;
-
 if (!colorsEnabled) {
   colors.disable();
 }
@@ -30,14 +28,14 @@ const getLogger = (moduleName) => ({
   info: (...msg) => {
     logMessage(infoStream, `[INFO] ${msg.join(' ')}`);
 
-    if (LOG_LEVEL === 'INFO' || LOG_LEVEL === 'WARN' || LOG_LEVEL === 'ERROR') {
+    if (logLevel === 'info') {
       console.log(`${colors.bgGreen(moduleName)}:`, ...msg);
     }
   },
   warn: (...msg) => {
     logMessage(errorStream, `[WARN] ${msg.join(' ')}`);
 
-    if (LOG_LEVEL === 'WARN' || LOG_LEVEL === 'ERROR') {
+    if (logLevel === 'info' || logLevel === 'warn') {
       console.error(`${colors.bgBlue(moduleName)}:`, ...msg);
     }
   },
