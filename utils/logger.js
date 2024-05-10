@@ -28,20 +28,22 @@ function logMessage(stream, message) {
 
 const getLogger = (moduleName) => ({
   info: (...msg) => {
+    logMessage(infoStream, `[INFO] ${msg.join(' ')}`);
+
     if (LOG_LEVEL === 'INFO' || LOG_LEVEL === 'WARN' || LOG_LEVEL === 'ERROR') {
       console.log(`${colors.bgGreen(moduleName)}:`, ...msg);
-      logMessage(infoStream, `[INFO] ${msg.join(' ')}`);
     }
   },
   warn: (...msg) => {
+    logMessage(errorStream, `[WARN] ${msg.join(' ')}`);
+
     if (LOG_LEVEL === 'WARN' || LOG_LEVEL === 'ERROR') {
       console.error(`${colors.bgBlue(moduleName)}:`, ...msg);
-      logMessage(errorStream, `[WARN] ${msg.join(' ')}`);
     }
   },
   error: (...msg) => {
-    console.error(`${colors.bgRed(moduleName)}:`, ...msg);
     logMessage(errorStream, `[ERROR] ${msg.join(' ')}`);
+    console.error(`${colors.bgRed(moduleName)}:`, ...msg);
   },
 });
 
