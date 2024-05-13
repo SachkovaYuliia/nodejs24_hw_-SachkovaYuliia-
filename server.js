@@ -1,35 +1,35 @@
+// const dotenv = require('dotenv');
+// dotenv.config();
 const http = require('http');
-const fs = require('fs');
-const path = require('path');
 const logger = require('./utils/logger')('server');
-const port = 3003;
-const srv = http.createServer();
-srv.listen(port);
-srv.on('listening', () => {
+
+const {port} = require('config');
+
+const server = http.createServer();
+server.listen(port);
+
+server.on('listening', () => {
     logger.info(`Server listening on port [${port}]`);
 });
 
-srv.on('request', (req, resp) => {
-
-    logger.info(`${req.method} ${req.url}`);
+server.on('request', (req, resp) => {
 
     if (req.url === '/healthcheck') {
-
         if (req.method === 'GET') {
-
-            resp.setHead(200, { 'content-type': 'text/html'});
+            resp.writeHead(200, { 'content-type': 'text/plain' });
+            resp.end('healthcheck passed');
             logger.info(`${req.method} ${req.url} 200`);
-            resp.end();
+            return; 
         } else {
-            resp.setHead(404, { 'content-type': 'text/html'});
+            resp.writeHead(404, { 'content-type': 'text/plain' });
+            resp.end('404 Not Found');
             logger.warn(`${req.method} ${req.url} 404`);
-            resp.end();
+            return; 
         }
     } else {
-        resp.setHeader('content-type', 'text/html');
+        resp.writeHead(404, { 'content-type': 'text/plain' });
+        resp.end('404 Not Found');
         logger.warn(`${req.method} ${req.url} 404`);
-        resp.end();
-        return;
+        return; 
     }
 });
-    
