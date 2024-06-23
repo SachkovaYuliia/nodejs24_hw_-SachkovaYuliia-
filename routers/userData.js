@@ -27,12 +27,12 @@ userDataRouter.post('/', userDataValidator, (req, res) => {
 
 userDataRouter.delete('/:userId', userIdValidator, (req, res) => {
     const { userId } = req.params;
-    const userIndex = users.findIndex(user => user.id === parseInt(userId, 10));
+    const userIndex = users.findIndex(user => user.id === userId);
     if (userIndex !== -1) {
         users.splice(userIndex, 1);
-        res.status(204).send({ info: 'User deleted' });
+        res.status(204).send('User deleted');
     } else {
-        res.status(404).send({ error: 'User not found' });
+        res.status(404).send('User not found');
     }
 });
 

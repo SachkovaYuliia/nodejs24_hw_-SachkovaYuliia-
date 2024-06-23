@@ -18,6 +18,7 @@ const logStream = logrotate({
 });
 
 app.use(morgan('combined', { stream: logStream }));
+app.use(morgan('dev'));
 
 app.use((req, res, next) => {
     res.on('finish', () => {
