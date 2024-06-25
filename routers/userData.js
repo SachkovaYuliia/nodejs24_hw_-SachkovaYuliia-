@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { userDataValidator } = require('../middlewares/validators');
 const { userIdValidator } = require('../middlewares/validatorId');
-const { getAllUsers, getUserById, createUser, deleteUserById } = require('../user_service');
+const { getAllUsers, getUserById, createUser, deleteUserById } = require('./servises/user_service');
 const userDataRouter = Router();
 
 function errorHandler(err, _req, res, _next) {
@@ -29,6 +29,10 @@ userDataRouter.delete('/:userId', userIdValidator, (req, res) => {
     deleteUserById(userId);
     res.status(204).send('User deleted');
 }, errorHandler);
+
+userDataRouter.use((req, res)=> {
+    res.status(404).send();
+;})
 
 module.exports = {
     userDataRouter

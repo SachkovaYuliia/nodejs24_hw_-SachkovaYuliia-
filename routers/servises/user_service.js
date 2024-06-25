@@ -5,7 +5,7 @@ const dataSource = [
 ]
 
 function getAllUsers(){
-    return dataSource;
+    return [...dataSource];
 }
 
 function getUserById(userId){
