@@ -11,7 +11,8 @@ const userSchema = yup.object({
 
 const userDataValidator = async (req, res, next) => {
     try {
-        await userSchema.validate(req.body, { abortEarly: false });
+        const parseId = await userSchema.validate(req.body, { abortEarly: false });
+        req.params = parseId;
         next();
     } catch (err) {
         res.status(400).send({ error: err.errors });
