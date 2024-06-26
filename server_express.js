@@ -17,6 +17,8 @@ const logStream = logrotate({
     keep: 3
 });
 
+app.set('view engine', 'pug');
+
 app.use(morgan('combined', { stream: logStream }));
 app.use(morgan('dev'));
 
@@ -27,8 +29,13 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(express.static('static'));
+
 const { userDataRouter } = require('./routers/userData');
+const { pagesRouter } = require('./routers/pages');
 app.use('/users', userDataRouter);
 
 const srvConfig = config.get('server');
 app.listen(srvConfig.port, () => logger.info(`Server is listening on [${srvConfig.port}]`));
+
+app.use('/pug', pagesRouter)

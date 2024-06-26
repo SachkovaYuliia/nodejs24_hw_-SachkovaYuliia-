@@ -1,0 +1,25 @@
+html 
+    head 
+        title User List
+        link(href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet")
+        link(href="styles.css" rel="stylesheet")
+        link(href="/favicon_io/favicon-32x32.png" rel="icon" type="image/x-icon")
+    body
+        div.container.mt-5
+            nav.navbar.navbar-expand-lg.navbar-light.bg-light
+                div.container
+                    a.navbar-brand(href="/") Home page
+            h1.text-center User List
+            div#root
+            table.table.table-striped.mt-4
+                thead.thead-dark
+                    each headerItem in ["ID", "Username", "Email"]
+                        th=headerItem 
+                tbody.user-table-body
+                    each item in locals.dataList
+                        tr
+                            td= item.id
+                            td= item.username
+                            td= item.email
+
+
